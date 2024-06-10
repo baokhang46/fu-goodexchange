@@ -13,7 +13,7 @@ namespace Repositories
         public Account GetAccountByEmail(string email)
             => AccountDAO.GetAccountByEmail(email);
         public List<Account> GetAllAccounts()
-            => AccountDAO.GetSystemAccounts();
+            => AccountDAO.GetAllAccounts();
         public Account GetAccountById(int accountId)
             => AccountDAO.GetAccountById(accountId);
         public void CreateAccount(Account account)
