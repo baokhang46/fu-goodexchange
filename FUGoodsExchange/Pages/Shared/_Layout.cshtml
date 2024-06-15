@@ -3,49 +3,50 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - FUGoodsExchange</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/FUGoodsExchange.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - FU Good Exchange</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!-- Add other stylesheets and scripts here -->
+    <style>
+        /* CSS for evenly spacing navigation links */
+        .navbar-list {
+            display: flex;
+            justify-content: space-between; /* Distributes items evenly along the flex container's main axis */
+            list-style-type: none; /* Remove default list styling */
+            padding: 0; /* Remove default padding */
+        }
+
+            .navbar-list li {
+                margin-right: 10px; /* Adjust as needed for spacing between links */
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">FUGoodsExchange</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <a href="/"><img src="~/images/logo.png" alt="Logo" /></a>
+                </div>
+                <div class="navbar-menu">
+                    <ul class="navbar-list">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <!-- Add more navigation links here -->
                     </ul>
                 </div>
-            </div>
-        </nav>
+                <div class="navbar-search">
+                    <input type="text" class="srchTxt" placeholder="Search..." />
+                    <button class="btn">Go</button>
+                </div>
+            </nav>
+        </div>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        @RenderBody()
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - FUGoodsExchange - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+    <footer>
+        <p>&copy; 2024 - FU Good Exchange - <a href="/Privacy">Privacy</a></p>
     </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
