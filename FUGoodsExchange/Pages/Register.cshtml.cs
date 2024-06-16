@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BussinessObject.Model;
 using Services;
-using FUGoodsExchange.ViewModels;
+using FUGoodsExchange.Pages.Models;
+using FUGoodsExchange.Security;
 
 namespace FUGoodsExchange.Pages
 {
@@ -38,16 +39,19 @@ namespace FUGoodsExchange.Pages
                 return Page();
             }
 
+            string hashedPassword = PasswordHasher.HashPassword(Account.Password);
             var newAccount = new Account
             {
                 Username = Account.Username,
                 Email = Account.Email,
-                Password = Account.Password,
+                Password = hashedPassword,
                 Status = "Active" 
             };
 
             _accountService.CreateAccount(newAccount);
 
+            HttpContext.Session.SetString("UserRole", "Buyer");
+            HttpContext.Session.SetString("UserEmail", newAccount.Email);
             return RedirectToPage("/Login");
         }
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BussinessObject.Model;
 using Services;
+using FUGoodsExchange.Security;
 
 namespace FUGoodsExchange.Pages
 {
@@ -14,8 +15,11 @@ namespace FUGoodsExchange.Pages
     {
         private readonly IAccountService _accountService;
         private readonly IConfiguration _configuration;
+     
 
-        public LoginModel(IAccountService accountService, IConfiguration configuration)
+        public LoginModel(IAccountService accountService, 
+            IConfiguration configuration,
+            PasswordHasher passwordHasher)
         {
             _accountService = accountService;
             _configuration = configuration;
@@ -40,14 +44,14 @@ namespace FUGoodsExchange.Pages
             var adminEmail = _configuration["AdminAccount:Email"];
             var adminPassword = _configuration["AdminAccount:Password"];
 
-            if (Account.Email == adminEmail && Account.Password == adminPassword)
+            if (Account.Email == adminEmail && PasswordHasher.VerifyPassword(Account.Password, adminPassword))
             {
                 HttpContext.Session.SetString("UserRole", "Admin");
                 HttpContext.Session.SetString("UserEmail", Account.Email);
                 return RedirectToPage("/AdminHomePage/AdminHomePage");
             }
             var account = _accountService.GetAccountByEmail(Account.Email);
-            if (account == null || account.Password != Account.Password)
+            if (account == null || PasswordHasher.VerifyPassword(account.Password, Account.Password))
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
