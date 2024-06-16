@@ -1,4 +1,5 @@
 using BussinessObject.Model;
+using FUGoodsExchange.Security;
 using Microsoft.EntityFrameworkCore;
 using Services;
 
@@ -23,6 +24,7 @@ builder.Services.AddSession(options =>
 
 // Register repositories and services
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<PasswordHasher>();
 
 var app = builder.Build();
 

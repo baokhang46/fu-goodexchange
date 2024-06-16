@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using BussinessObject.Model;
 using Services;
 using FUGoodsExchange.Security;
@@ -14,15 +11,10 @@ namespace FUGoodsExchange.Pages
     public class LoginModel : PageModel
     {
         private readonly IAccountService _accountService;
-        private readonly IConfiguration _configuration;
-     
 
-        public LoginModel(IAccountService accountService, 
-            IConfiguration configuration,
-            PasswordHasher passwordHasher)
+        public LoginModel(IAccountService accountService)
         {
             _accountService = accountService;
-            _configuration = configuration;
         }
 
         public IActionResult OnGet()
@@ -31,47 +23,44 @@ namespace FUGoodsExchange.Pages
         }
 
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public Account Account { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        {          
 
-            var adminEmail = _configuration["AdminAccount:Email"];
-            var adminPassword = _configuration["AdminAccount:Password"];
-
-            if (Account.Email == adminEmail && PasswordHasher.VerifyPassword(Account.Password, adminPassword))
-            {
-                HttpContext.Session.SetString("UserRole", "Admin");
-                HttpContext.Session.SetString("UserEmail", Account.Email);
-                return RedirectToPage("/AdminHomePage/AdminHomePage");
-            }
             var account = _accountService.GetAccountByEmail(Account.Email);
-            if (account == null || PasswordHasher.VerifyPassword(account.Password, Account.Password))
+            if (account == null || !PasswordHasher.VerifyPassword(Account.Password, account.Password))
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
 
-            HttpContext.Session.SetString("UserRole", account.Role);
             HttpContext.Session.SetString("UserEmail", account.Email);
 
-            switch (account.Role)
+            if (account.Role == "Admin")
             {
-                case "Moderator":
-                    return RedirectToPage("/ModeratorHomePage/ModeratorHomePage");
-                case "Buyer":
-                    return RedirectToPage("/BuyerHomePage/BuyerHomePage");
-                case "Seller":
-                    return RedirectToPage("/SellerHomePage/SellerHomePage");
-                default:
-                    return RedirectToPage("./Index");
+                HttpContext.Session.SetString("UserRole", "Admin");
+                return RedirectToPage("/AdminHomePage/AdminHomePage");
             }
-
+            else if (account.Role == "Moderator")
+            {
+                HttpContext.Session.SetString("UserRole", "Moderator");
+                return RedirectToPage("/ModeratorHomePage/ModeratorHomePage");
+            }
+            else if (account.Role == "Buyer")
+            {
+                HttpContext.Session.SetString("UserRole", "Buyer");
+                return RedirectToPage("/BuyerHomePage/BuyerHomePage");
+            }
+            else if (account.Role == "Seller")
+            {
+                HttpContext.Session.SetString("UserRole", "Seller");
+                return RedirectToPage("/SellerHomePage/SellerHomePage");
+            }
+            else
+            {              
+                return RedirectToPage("./Index");
+            }
         }
     }
 }

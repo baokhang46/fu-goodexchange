@@ -40,19 +40,21 @@ namespace FUGoodsExchange.Pages
             }
 
             string hashedPassword = PasswordHasher.HashPassword(Account.Password);
+
             var newAccount = new Account
             {
                 Username = Account.Username,
                 Email = Account.Email,
                 Password = hashedPassword,
-                Status = "Active" 
+                Status = "Active",
+                Role = "Buyer" 
             };
 
             _accountService.CreateAccount(newAccount);
-
-            HttpContext.Session.SetString("UserRole", "Buyer");
+            HttpContext.Session.SetString("UserRole", newAccount.Role);
             HttpContext.Session.SetString("UserEmail", newAccount.Email);
-            return RedirectToPage("/Login");
+
+            return RedirectToPage("/Login"); 
         }
     }
 }
