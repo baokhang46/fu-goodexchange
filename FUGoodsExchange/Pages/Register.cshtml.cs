@@ -18,7 +18,7 @@ namespace FUGoodsExchange.Pages
         }
 
         [BindProperty]
-        public RegisterViewModel Account { get; set; } = new RegisterViewModel();
+        public RegisterResponseModel Account { get; set; } = new RegisterResponseModel();
 
         public IActionResult OnGet()
         {
