@@ -47,7 +47,6 @@ namespace FUGoodsExchange.Pages
                 Password = hashedPassword,
                 Status = "Active" 
             };
-
             _accountService.CreateAccount(newAccount);
 
             HttpContext.Session.SetString("UserRole", "Buyer");
