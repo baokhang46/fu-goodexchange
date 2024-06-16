@@ -1,4 +1,29 @@
 ﻿@page
-@model FUGoodsExchange.Pages.BuyerHomePage.BuyerHomePageModel
+@model FUGoodsExchange.Pages.ModeratorHomePage.ModeratorHomePageModel
 @{
+    ViewData["Title"] = "Moderator Home Page";
+}
+
+<div class="container">
+    <h1>Moderator Home Page</h1>
+    <p>Welcome, Moderator! Below are the available functionalities for you:</p>
+
+    <div class="list-group mb-4">
+        <a asp-page="/ViewPostsByCategory" class="list-group-item list-group-item-action">View posts for selling items by category</a>
+        <a asp-page="/SearchItemsByCategory" class="list-group-item list-group-item-action">Search for items by category</a>
+        <a asp-page="/ReadNews" class="list-group-item list-group-item-action">Read news</a>
+        <a asp-page="/ViewProductDetails" class="list-group-item list-group-item-action">View detailed product information</a>
+        <a asp-page="/ViewSellerDetails" class="list-group-item list-group-item-action">View seller details</a>
+        <a asp-page="/EditProfile" class="list-group-item list-group-item-action">Edit profile</a>
+        <a asp-page="/ViewOrderHistory" class="list-group-item list-group-item-action">View transaction history of orders</a>
+        <a asp-page="/ViewCurrentTransactions" class="list-group-item list-group-item-action">View current transactions</a>
+        <a asp-page="/ChatWithSeller" class="list-group-item list-group-item-action">Online chat with seller</a>
+        <a asp-page="/ParticipateInBuying" class="list-group-item list-group-item-action">Participate in buying product</a>
+        <a asp-page="/ReportSeller" class="list-group-item list-group-item-action">Report about the seller</a>
+    </div>
+ 
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

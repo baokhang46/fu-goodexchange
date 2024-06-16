@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BussinessObject.Model;
 
@@ -9,8 +10,11 @@ public partial class Account
 
     public string Username { get; set; } = null!;
 
+    [Required(ErrorMessage = "Password is required")]
     public string Password { get; set; } = null!;
 
+    [Required(ErrorMessage = "Email is required")]
+    [EmailAddress]
     public string Email { get; set; } = null!;
 
     public string Status { get; set; } = null!;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FUGoodsExchange.Pages.SellerHomePage
 {
-    public class SellerHomePaageModel : PageModel
+    public class SellerHomePageModel : PageModel
     {
         public void OnGet()
         {
