@@ -10,7 +10,7 @@ namespace DataAccessLayer
     {
         public static Report GetReportById(int reportId)
         {
-            using var db = new FugoodExchangeContext();
+            using var db = new FugoodexchangeContext();
             return db.Reports
                      .Include(r => r.Buyer)
                      .Include(r => r.Seller)
@@ -21,7 +21,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var db = new FugoodExchangeContext();
+                using var db = new FugoodexchangeContext();
                 return db.Reports
                          .Include(r => r.Buyer)
                          .Include(r => r.Seller)
@@ -37,7 +37,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 context.Reports.Add(report);
                 context.SaveChanges();
             }
@@ -51,7 +51,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 context.Entry(report).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -65,7 +65,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 var report = context.Reports.SingleOrDefault(r => r.ReportId == reportId);
                 if (report != null)
                 {
@@ -83,7 +83,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 var report = context.Reports.SingleOrDefault(r => r.ReportId == reportId);
                 if (report != null)
                 {

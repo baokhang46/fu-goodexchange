@@ -35,7 +35,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				return dbContent.Orders.ToList();
 			}
 			catch (Exception ex)
@@ -48,7 +48,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				return dbContent.Orders.SingleOrDefault(m => m.OrderId.Equals(order));
 			}
 			catch (Exception ex)
@@ -61,7 +61,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				Order orderDetail = GetOrderByID(order);
 				if (order != null)
 				{

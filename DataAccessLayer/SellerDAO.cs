@@ -35,7 +35,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				return dbContent.Sellers.ToList();
 			}
 			catch (Exception ex)
@@ -48,7 +48,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				return dbContent.Sellers.SingleOrDefault(m => m.SellerId.Equals(seller));
 			}
 			catch (Exception ex)
@@ -61,7 +61,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				Seller sellerProfile = GetSellerByID(seller.SellerId);
 				if (sellerProfile == null)
 				{
@@ -85,7 +85,7 @@ namespace DataAccessLayer
 		{
 			try
 			{
-				var dbContent = new FugoodExchangeContext();
+				var dbContent = new FugoodexchangeContext();
 				Seller sellerProfile = GetSellerByID(seller);
 				if (seller != null)
 				{
@@ -103,7 +103,7 @@ namespace DataAccessLayer
 
 		public void UpdateSeller(Seller seller)
 		{
-			var dbContent = new FugoodExchangeContext();
+			var dbContent = new FugoodexchangeContext();
 
 			if (seller != null)
 			{

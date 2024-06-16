@@ -7,7 +7,7 @@ namespace DataAccessLayer
     {
         public static Account GetAccountByEmail(string email)
         {
-            using var db = new FugoodExchangeContext();
+            using var db = new FugoodexchangeContext();
             return db.Accounts.FirstOrDefault(x => x.Email.Equals(email));
         }
 
@@ -16,7 +16,7 @@ namespace DataAccessLayer
             var listSystemAccounts = new List<Account>();
             try
             {
-                using var db = new FugoodExchangeContext();
+                using var db = new FugoodexchangeContext();
                 listSystemAccounts = db.Accounts.ToList();
             }
             catch (Exception e)
@@ -28,7 +28,7 @@ namespace DataAccessLayer
 
         public static Account GetAccountById(int accountId)
         {
-            using var db = new FugoodExchangeContext();
+            using var db = new FugoodexchangeContext();
             return db.Accounts.FirstOrDefault(c => c.AccountId.Equals(accountId));
         }
 
@@ -36,7 +36,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 context.Accounts.Add(account);
                 context.SaveChanges();
             }
@@ -50,7 +50,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 context.Entry<Account>(account).State = EntityState.Modified;
                 context.SaveChanges();
             }
@@ -64,7 +64,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 var account = context.Accounts.SingleOrDefault(c => c.AccountId == accountId);
                 if (account != null)
                 {
@@ -82,7 +82,7 @@ namespace DataAccessLayer
         {
             try
             {
-                using var context = new FugoodExchangeContext();
+                using var context = new FugoodexchangeContext();
                 var account = context.Accounts.SingleOrDefault(c => c.AccountId == accountId);
                 if (account != null)
                 {
