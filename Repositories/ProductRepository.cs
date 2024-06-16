@@ -8,9 +8,9 @@ namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly FugoodExchangeContext _dbContext;
+        private readonly FugoodexchangeContext _dbContext;
 
-        public ProductRepository(FugoodExchangeContext dbContext)
+        public ProductRepository(FugoodexchangeContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -10,10 +10,10 @@ namespace DataAccessLayer
 {
     public class UserDAO
     {
-        private readonly FugoodExchangeContext _context;
+        private readonly    FugoodexchangeContext _context;
         private readonly ILogger<UserDAO> _logger;
 
-        public UserDAO(FugoodExchangeContext context, ILogger<UserDAO> logger)
+        public UserDAO(FugoodexchangeContext context, ILogger<UserDAO> logger)
         {
             _context = context;
             _logger = logger;
