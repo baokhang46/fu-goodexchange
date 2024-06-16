@@ -2,7 +2,7 @@
 
 namespace FUGoodsExchange.Pages.Models
 {
-    public class RegisterViewModel
+    public class RegisterResponseModel
     {
         [Required]
         public string Username { get; set; } = null!;

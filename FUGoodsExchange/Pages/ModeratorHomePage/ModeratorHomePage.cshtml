@@ -1,0 +1,23 @@
+﻿@page
+@model FUGoodsExchange.Pages.ModeratorHomePage.ModeratorHomePageModel
+@{
+    ViewData["Title"] = "Moderator Home Page";
+}
+
+<div class="container">
+    <h1>Moderator Home Page</h1>
+    <p>Welcome, Moderator! Below are the available functionalities for you:</p>
+
+    <div class="list-group">
+        <a asp-page="/ViewPostsByCategory" class="list-group-item list-group-item-action">View posts for selling items by category</a>
+        <a asp-page="/SearchItemsByCategory" class="list-group-item list-group-item-action">Search for items by category</a>
+        <a asp-page="/ViewSellerDetails" class="list-group-item list-group-item-action">View seller details</a>
+        <a asp-page="/ApprovePosts" class="list-group-item list-group-item-action">Approve posts</a>
+        <a asp-page="/RejectPosts" class="list-group-item list-group-item-action">Reject posts</a>
+        <a asp-page="/ViewReportsAndComplaints" class="list-group-item list-group-item-action">View reports, complaints from users</a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
