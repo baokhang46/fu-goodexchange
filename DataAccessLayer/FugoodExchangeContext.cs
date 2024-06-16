@@ -5,13 +5,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace BussinessObject.Model;
 
-public partial class FugoodExchangeContext : DbContext
+public partial class FugoodexchangeContext : DbContext
 {
-    public FugoodExchangeContext()
+    public FugoodexchangeContext()
     {
     }
 
-    public FugoodExchangeContext(DbContextOptions<FugoodExchangeContext> options)
+    public FugoodexchangeContext(DbContextOptions<FugoodexchangeContext> options)
         : base(options)
     {
     }
@@ -38,36 +38,35 @@ public partial class FugoodExchangeContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    private string GetConnectionString()
-    {
-        IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true).Build();
-        return configuration["ConnectionStrings:DefaultConnectionString"];
-    }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer(GetConnectionString());
+
+    string GetConnectionString()
     {
-        optionsBuilder.UseSqlServer(GetConnectionString());
+        IConfiguration config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json").Build();
+        return config["ConnectionStrings:DefaultConnectionString"];
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__349DA5A6C9A71ADA");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__349DA5A6FD2EED55");
 
             entity.ToTable("Account");
 
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.Password).HasMaxLength(255);
+            entity.Property(e => e.Role).HasMaxLength(50);
             entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Buyer>(entity =>
         {
-            entity.HasKey(e => e.BuyerId).HasName("PK__Buyer__4B81C1CA661D19BA");
+            entity.HasKey(e => e.BuyerId).HasName("PK__Buyer__4B81C1CA1DB3FC16");
 
             entity.ToTable("Buyer");
 
@@ -82,7 +81,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Cart__51BCD7B7AA6C1BEA");
+            entity.HasKey(e => e.CartId).HasName("PK__Cart__51BCD7B732246464");
 
             entity.ToTable("Cart");
 
@@ -94,11 +93,11 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<CartItem>(entity =>
         {
-            entity.HasKey(e => e.CartItemId).HasName("PK__CartItem__488B0B0A8B669D39");
+            entity.HasKey(e => e.CartItemId).HasName("PK__CartItem__488B0B0ADB3D8EFE");
 
             entity.ToTable("CartItem");
 
-            entity.HasIndex(e => e.ProductId, "UQ__CartItem__B40CC6CC1B317797").IsUnique();
+            entity.HasIndex(e => e.ProductId, "UQ__CartItem__B40CC6CC335EE9E5").IsUnique();
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
                 .HasForeignKey(d => d.CartId)
@@ -113,7 +112,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Category__19093A2BA75E9712");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Category__19093A2BC7886B6A");
 
             entity.ToTable("Category");
 
@@ -123,11 +122,11 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BAF227208FF");
+            entity.HasKey(e => e.OrderId).HasName("PK__Order__C3905BAFA3C745FE");
 
             entity.ToTable("Order");
 
-            entity.HasIndex(e => e.ProductId, "UQ__Order__B40CC6EC46DCCBE3").IsUnique();
+            entity.HasIndex(e => e.ProductId, "UQ__Order__B40CC6EC07510D5B").IsUnique();
 
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.BuyerId).HasColumnName("BuyerID");
@@ -156,7 +155,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6EDE99FD710");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED871BBCE6");
 
             entity.ToTable("Product");
 
@@ -179,7 +178,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Report>(entity =>
         {
-            entity.HasKey(e => e.ReportId).HasName("PK__Report__D5BD48E5A83764BB");
+            entity.HasKey(e => e.ReportId).HasName("PK__Report__D5BD48E55218CD91");
 
             entity.ToTable("Report");
 
@@ -200,7 +199,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Seller>(entity =>
         {
-            entity.HasKey(e => e.SellerId).HasName("PK__Seller__7FE3DBA1A2ED8079");
+            entity.HasKey(e => e.SellerId).HasName("PK__Seller__7FE3DBA19278D412");
 
             entity.ToTable("Seller");
 
@@ -215,7 +214,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<Transaction>(entity =>
         {
-            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4B84CFE326");
+            entity.HasKey(e => e.TransactionId).HasName("PK__Transact__55433A4BDC6E9738");
 
             entity.ToTable("Transaction");
 
@@ -245,7 +244,7 @@ public partial class FugoodExchangeContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4CFA7DDA86");
+            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4C1F0E8546");
 
             entity.ToTable("User");
 

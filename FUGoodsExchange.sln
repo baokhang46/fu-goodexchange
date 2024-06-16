@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FUGoodsExchange", "FUGoodsExchange\FUGoodsExchange.csproj", "{6CE8E39D-B01A-439A-B585-6F99862BE89E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FUGoodsExchange", "FUGoodsExchange\FUGoodsExchange.csproj", "{6CE8E39D-B01A-439A-B585-6F99862BE89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessObject", "BussinessObject\BussinessObject.csproj", "{208682D7-0106-4796-BAD4-5D117310F77D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BussinessObject", "BussinessObject\BussinessObject.csproj", "{208682D7-0106-4796-BAD4-5D117310F77D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{48D7F3B1-75A6-4E89-9552-17562669685E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{48D7F3B1-75A6-4E89-9552-17562669685E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{51866031-C41D-4A84-A5DD-1A34612B0B25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{51866031-C41D-4A84-A5DD-1A34612B0B25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{A4BDCE81-0813-42B3-8AB2-6DCE384423DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{A4BDCE81-0813-42B3-8AB2-6DCE384423DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

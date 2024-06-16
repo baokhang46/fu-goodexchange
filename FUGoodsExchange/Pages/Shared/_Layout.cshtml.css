@@ -1,48 +1,216 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-a {
-  color: #0077cc;
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+/* Header */
+#header {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    #header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+.navbar-brand img {
+    height: 50px;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.navbar-menu {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+.navbar-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    .navbar-list li {
+        margin: 0;
+    }
+
+    .navbar-list a {
+        text-decoration: none;
+        color: #333;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+        .navbar-list a:hover {
+            background-color: #f8f8f8;
+        }
+
+.navbar-search {
+    display: flex;
+    align-items: center;
 }
+
+.srchTxt {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Carousel */
+#carouselBlk {
+    margin-top: 20px;
+    position: relative;
+}
+
+.carousel-inner .item img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
+}
+
+/* Sidebar */
+#sidebar {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+    #sidebar .thumbnail img {
+        width: 100%;
+        height: auto;
+    }
+
+    #sidebar .caption h5 {
+        margin: 10px 0;
+    }
+
+    #sidebar .caption .btn {
+        margin: 5px 0;
+    }
+
+.nav-stacked .nav-item .nav-link {
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+    .nav-stacked .nav-item .nav-link:hover {
+        background-color: #f8f8f8;
+    }
+
+/* Main Content */
+#mainBody {
+    margin-top: 20px;
+}
+
+.well {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+    .thumbnails .thumbnail {
+        flex: 1 1 calc(33.333% - 20px);
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .thumbnails .thumbnail img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .thumbnails .thumbnail:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+    .thumbnails .caption h5 {
+        margin: 10px 0;
+    }
+
+    .thumbnails .caption .btn {
+        margin: 5px 0;
+    }
+
+/* Footer */
+footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 20px 0;
+    text-align: center;

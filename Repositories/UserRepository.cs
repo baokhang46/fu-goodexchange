@@ -8,9 +8,9 @@ namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly FugoodExchangeContext _dbContext;
+        private readonly FugoodexchangeContext _dbContext;
 
-        public UserRepository(FugoodExchangeContext dbContext)
+        public UserRepository(FugoodexchangeContext dbContext)
         {
             _dbContext = dbContext;
         }
