@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FUGoodsExchange.ViewModels
+namespace FUGoodsExchange.Pages.Models
 {
     public class RegisterViewModel
     {
