@@ -1,0 +1,26 @@
+﻿@page
+@model FUGoodsExchange.Pages.SellerHomePage.SellerHomePageModel
+@{
+    ViewData["Title"] = "Seller Home Page";
+}
+
+<div class="container">
+    <h1>Seller Home Page</h1>
+    <p>Welcome, Seller! Below are the available functionalities for you:</p>
+
+    <div class="list-group mb-4">
+        <a asp-page="/ViewPostsByCategory" class="list-group-item list-group-item-action">View posts for selling items by category</a>
+        <a asp-page="/SearchItemsByCategory" class="list-group-item list-group-item-action">Search for items by category</a>
+        <a asp-page="/ViewItemDetails" class="list-group-item list-group-item-action">View detailed information of the item</a>
+        <a asp-page="/EditProfile" class="list-group-item list-group-item-action">Edit profile</a>
+        <a asp-page="/ChatWithBuyer" class="list-group-item list-group-item-action">Online chat with buyer</a>
+        <a asp-page="/ViewOrderHistory" class="list-group-item list-group-item-action">View transaction history of orders</a>
+        <a asp-page="/ViewItemsForSale" class="list-group-item list-group-item-action">View items currently for sale</a>
+        <a asp-page="/PostItemsForSale" class="list-group-item list-group-item-action">Post items for sale by category: upload photos, add descriptions</a>
+        <a asp-page="/ViewCurrentTransactions" class="list-group-item list-group-item-action">View current transactions</a>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
