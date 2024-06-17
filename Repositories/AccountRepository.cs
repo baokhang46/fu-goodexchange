@@ -20,10 +20,9 @@ namespace Repositories
             => AccountDAO.CreateAccount(account);
         public void UpdateAccount(Account account)
             => AccountDAO.UpdateAccount(account);
-        public void DeactivateAccount(int accountId)
-            => AccountDAO.DeactivateSystemAccount(accountId);
-        public void ReactivateAccount(int accountId)
-            => AccountDAO.DeactivateSystemAccount(accountId);
 
+        public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption)
+            => AccountDAO.SearchAccounts(searchTerm, sortOption, filterOption);
+        
     }
 }

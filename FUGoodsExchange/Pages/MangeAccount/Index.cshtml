@@ -5,17 +5,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Mange Accounts</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<form method="get">
+    <select class="form-control" id="SortOption" name="SortOption">
+        <option value="name-asc" selected="@((Model.SortOption == "name-asc") ? "selected" : null)">Name Ascending</option>
+        <option value="name-desc" selected="@((Model.SortOption == "name-desc") ? "selected" : null)">Name Descending</option>
+    </select>
+
+    <select class="form-control" id="FilterOption" name="FilterOption">
+        <option value="all" selected="@((Model.FilterOption == "all") ? "selected" : null)">All</option>
+        <option value="active" selected="@((Model.FilterOption == "active") ? "selected" : null)">Active</option>
+        <option value="inactive" selected="@((Model.FilterOption == "inactive") ? "selected" : null)">Inactive</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
-            <th>
+            <a asp-page="./Index" asp-route-sortOption="name-asc" asp-route-searchTerm="@Model.SearchTerm" asp-route-filterOption="@Model.FilterOption">
                 @Html.DisplayNameFor(model => model.Account[0].Username)
-            </th>
+            </a>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].Password)
             </th>
@@ -23,7 +36,9 @@
                 @Html.DisplayNameFor(model => model.Account[0].Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account[0].Status)
+                <a asp-page="./Index" asp-route-sortOption="date-asc" asp-route-searchTerm="@Model.SearchTerm" asp-route-filterOption="@Model.FilterOption">
+                    @Html.DisplayNameFor(model => model.Account[0].Status)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].Role)
@@ -51,7 +66,6 @@
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.AccountId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
             </td>
         </tr>

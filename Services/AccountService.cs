@@ -22,10 +22,7 @@ namespace Services
             _accountRepository.CreateAccount(account);
         }
 
-        public void DeactivateAccount(int accountId)
-        {
-            _accountRepository.DeactivateAccount(accountId);
-        }
+       
 
         public Account GetAccountByEmail(string email)
         {
@@ -37,20 +34,20 @@ namespace Services
             return _accountRepository.GetAccountById(accountId);
         }
 
-
         public void UpdateAccount(Account account)
         {
             _accountRepository.UpdateAccount(account);
         }
 
-        public void ReactivateAccount(int accountId)
-        {
-            _accountRepository.ReactivateAccount(accountId);
-        }
 
         public List<Account> GetAllAccounts()
         {
             return _accountRepository.GetAllAccounts();
+        }
+
+        public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption)
+        {
+            return _accountRepository.SearchAccounts(searchTerm, sortOption, filterOption); 
         }
     }
 }
