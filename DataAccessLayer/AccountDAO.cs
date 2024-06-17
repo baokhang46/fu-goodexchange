@@ -21,7 +21,7 @@ namespace DataAccessLayer
             }
             catch (Exception e)
             {
-
+                throw new Exception(e.Message);
             }
             return listSystemAccounts;
         }
@@ -48,15 +48,44 @@ namespace DataAccessLayer
 
         public static void UpdateAccount(Account account)
         {
+
             try
             {
                 using var context = new FugoodexchangeContext();
-                context.Entry<Account>(account).State = EntityState.Modified;
+                context.Entry<Account>(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 context.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(e.Message);
+                throw new Exception("Failed to update account", ex);
+            }
+
+        }
+    
+
+
+
+        public static void DeactivateAccount(Account account)
+        {
+            try
+            {
+                using var context = new FugoodexchangeContext();
+
+               
+                var accountToDeactivate = context.Accounts.Find(account.AccountId);
+                if (accountToDeactivate != null)
+                {
+                    accountToDeactivate.Status = "Inactive"; 
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Account not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while deactivating the account: {ex.Message}");
             }
         }
 
@@ -72,11 +101,11 @@ namespace DataAccessLayer
 
             if (filterOption == "active")
             {
-                accounts = accounts.Where(a => a.Status == "active");
+                accounts = accounts.Where(a => a.Status == "Active");
             }
             else if (filterOption == "inactive")
             {
-                accounts = accounts.Where(a => a.Status == "inactive");
+                accounts = accounts.Where(a => a.Status == "Inactive");
             }
 
             switch (sortOption)

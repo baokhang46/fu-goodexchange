@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Mange Accounts</h1>
+<h1>Manage Accounts</h1>
 
 <form method="get">
     <select class="form-control" id="SortOption" name="SortOption">
@@ -22,13 +22,14 @@
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
-
 <table class="table">
     <thead>
         <tr>
-            <a asp-page="./Index" asp-route-sortOption="name-asc" asp-route-searchTerm="@Model.SearchTerm" asp-route-filterOption="@Model.FilterOption">
-                @Html.DisplayNameFor(model => model.Account[0].Username)
-            </a>
+            <th>
+                <a asp-page="./Index" asp-route-sortOption="name-asc" asp-route-searchTerm="@Model.SearchTerm" asp-route-filterOption="@Model.FilterOption">
+                    @Html.DisplayNameFor(model => model.Account[0].Username)
+                </a>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].Password)
             </th>
@@ -47,28 +48,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Account) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
+        @foreach (var item in Model.Account)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                  <td>
+                @if (item.Role != "Admin")
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
+                }
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.AccountId">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.AccountId">Delete</a>
-            </td>
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

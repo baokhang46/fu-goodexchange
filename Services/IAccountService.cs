@@ -10,5 +10,6 @@ namespace Services
         void CreateAccount(Account account);
         void UpdateAccount(Account account);
         public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption);
+        void DeactivateAccount(Account account);
     }
 }

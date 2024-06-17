@@ -49,5 +49,10 @@ namespace Services
         {
             return _accountRepository.SearchAccounts(searchTerm, sortOption, filterOption); 
         }
+
+        public void DeactivateAccount(Account account)
+        {
+             _accountRepository.DeactivateAccount(account);
+        }
     }
 }
