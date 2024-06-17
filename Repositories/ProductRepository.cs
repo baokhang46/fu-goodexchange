@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using BussinessObject.Model;
 using DataAccessLayer;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
@@ -35,16 +34,6 @@ namespace Repositories
         {
             _dbContext.Products.Update(product);
             await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteProduct(int id)
-        {
-            var product = await _dbContext.Products.FindAsync(id);
-            if (product != null)
-            {
-                _dbContext.Products.Remove(product);
-                await _dbContext.SaveChangesAsync();
-            }
         }
     }
 }

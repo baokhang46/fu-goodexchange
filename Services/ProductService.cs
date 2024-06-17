@@ -1,9 +1,3 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Repositories;
 using BussinessObject.Model;
 
 namespace Services
@@ -19,70 +13,27 @@ namespace Services
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            try
-            {
-                return await _productRepo.GetAllProduct();
+            return _productRepository.GetAllProduct();
             }
-            catch (Exception ex)
-            {
-                // Log the exception
-                throw new Exception($"Failed to retrieve products: {ex.Message}", ex);
-            }
-        }
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            try
-            {
-                return await _productRepo.GetProductById(id);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception
-                throw new Exception($"Failed to retrieve product: {ex.Message}", ex);
-            }
+            _productRepository.GetProductById(id);
         }
 
         public async Task<int> CreateProductAsync(Product product)
         {
-            try
-            {
-                await _productRepo.AddProduct(product);
-                return product.ProductId; 
+            _productRepository.AddProduct(product);
             }
-            catch (Exception ex)
-            {
-                // Log the exception
-                throw new Exception($"Failed to create product: {ex.Message}", ex);
-            }
-        }
 
         public async Task<string> UpdateProductAsync(Product product)
         {
-            try
-            {
-                await _productRepo.UpdateProduct(product);
-                return "Product updated successfully";
-            }
-            catch (Exception ex)
-            {
-                // Log the exception
-                throw new Exception($"Failed to update product: {ex.Message}", ex);
-            }
+            _productRepository.UpdateProduct(product);
         }
 
-        public async Task<string> DeleteProductAsync(int id)
-        {
-            try
+        public void DeleteProduct(int id)
             {
-                await _productRepo.DeleteProduct(id);
-                return "Product deleted successfully";
-            }
-            catch (Exception ex)
-            {
-                // Log the exception
-                throw new Exception($"Failed to delete product: {ex.Message}", ex);
-            }
+            _productRepository.DeleteProduct(id);
         }
     }
 }

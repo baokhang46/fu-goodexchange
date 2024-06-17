@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using BussinessObject.Model;
 
 namespace DataAccessLayer
 {
     public class ProductDAO
     {
-        private readonly FugoodexchangeContext _context;
-        private readonly ILogger<ProductDAO> _logger;
-
-        public ProductDAO(FugoodexchangeContext context, ILogger<ProductDAO> logger)
+        public static Product GetProductById(int productId)
         {
             _context = context;
             _logger = logger;
