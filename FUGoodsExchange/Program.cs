@@ -1,12 +1,20 @@
 using BussinessObject.Model;
 using FUGoodsExchange.Security;
 using Microsoft.EntityFrameworkCore;
+using Repositories;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton(typeof(IReportService), typeof(ReportService));
+builder.Services.AddSingleton(typeof(IProductService), typeof(ProductService));
+
+
+builder.Services.AddSingleton(typeof(IReportRepository), typeof(ReportRepository));
+builder.Services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
+
 
 builder.Services.AddDbContext<FugoodexchangeContext>(options =>
 {

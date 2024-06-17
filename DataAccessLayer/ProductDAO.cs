@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using BussinessObject.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,92 +11,76 @@ namespace DataAccessLayer
     {
         public static Product GetProductById(int productId)
         {
-            _context = context;
-            _logger = logger;
-        }
-
-        // Create
-        public async Task AddProductAsync(Product product)
-        {
             try
             {
-                await _context.Products.AddAsync(product);
-                await _context.SaveChangesAsync();
+                using var db = new FugoodexchangeContext();
+                return db.Products.FirstOrDefault(p => p.ProductId == productId);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error adding product");
-                throw;
+                throw new Exception($"An error occurred while retrieving product with ID {productId}.", e);
             }
         }
 
-        // Read
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public static List<Product> GetAllProducts()
         {
             try
             {
-                return await _context.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+                using var db = new FugoodexchangeContext();
+                return db.Products
+                         .Include(p => p.Category)
+                         .Include(p => p.Seller)
+                         .ToList();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error fetching product by ID");
-                throw;
+                throw new Exception("An error occurred while retrieving products.", e);
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public static void CreateProduct(Product product)
         {
             try
             {
-                return await _context.Products.ToListAsync();
+                using var context = new FugoodexchangeContext();
+                context.Products.Add(product);
+                context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error fetching all products");
-                throw;
+                throw new Exception("An error occurred while creating the product.", e);
             }
         }
 
-        // Update
-        public async Task UpdateProductAsync(Product product)
+        public static void UpdateProduct(Product product)
         {
             try
             {
-                var existingProduct = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == product.ProductId);
-                if (existingProduct != null)
-                {
-                    existingProduct.Description = product.Description;
-                    existingProduct.Price = product.Price;
-                    existingProduct.Quantity = product.Quantity;
-                    existingProduct.CategoryId = product.CategoryId;
-                    existingProduct.DatePosted = product.DatePosted;
-                    existingProduct.Status = product.Status;
-                    await _context.SaveChangesAsync();
-                }
+                using var context = new FugoodexchangeContext();
+                context.Entry(product).State = EntityState.Modified;
+                context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error updating product");
-                throw;
+                throw new Exception("An error occurred while updating the product.", e);
             }
         }
 
-        // Delete
-        public async Task DeleteProductAsync(int id)
+        public static void DeleteProduct(int productId)
         {
             try
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+                using var context = new FugoodexchangeContext();
+                var product = context.Products.SingleOrDefault(p => p.ProductId == productId);
                 if (product != null)
                 {
-                    _context.Products.Remove(product);
-                    await _context.SaveChangesAsync();
+                    context.Products.Remove(product);
+                    context.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error deleting product");
-                throw;
+                throw new Exception("An error occurred while deleting the product.", e);
             }
         }
     }

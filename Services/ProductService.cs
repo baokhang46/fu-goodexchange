@@ -1,38 +1,40 @@
 using BussinessObject.Model;
+using Repositories;
+using System.Collections.Generic;
 
 namespace Services
 {
     public class ProductService : IProductService
     {
-        private readonly IProductRepository _productRepo;
+        private readonly IProductRepository _productRepository;
 
-        public ProductService(IProductRepository productRepo)
+        public ProductService(IProductRepository productRepository)
         {
-            _productRepo = productRepo ?? throw new ArgumentNullException(nameof(productRepo));
+            _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public List<Product> GetAllProducts()
         {
             return _productRepository.GetAllProduct();
-            }
+        }
 
-        public async Task<Product> GetProductByIdAsync(int id)
+        public void GetProductById(int id)
         {
             _productRepository.GetProductById(id);
         }
 
-        public async Task<int> CreateProductAsync(Product product)
+        public void CreateProduct(Product product)
         {
             _productRepository.AddProduct(product);
-            }
+        }
 
-        public async Task<string> UpdateProductAsync(Product product)
+        public void UpdateProduct(Product product)
         {
             _productRepository.UpdateProduct(product);
         }
 
         public void DeleteProduct(int id)
-            {
+        {
             _productRepository.DeleteProduct(id);
         }
     }
