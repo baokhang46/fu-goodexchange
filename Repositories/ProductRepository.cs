@@ -2,49 +2,34 @@
 using System.Threading.Tasks;
 using BussinessObject.Model;
 using DataAccessLayer;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly FugoodexchangeContext _dbContext;
-
-        public ProductRepository(FugoodexchangeContext dbContext)
+        public void AddProduct(Product product)
         {
-            _dbContext = dbContext;
+            ProductDAO.CreateProduct(product);
         }
 
-        public async Task<Product> GetProductById(int id)
+        public List<Product> GetAllProduct()
         {
-            return await _dbContext.Products.FindAsync(id);
+            return ProductDAO.GetAllProducts();
         }
 
-        public async Task<IEnumerable<Product>> GetAllProduct()
+        public Product GetProductById(int productId)
         {
-            return await _dbContext.Products.ToListAsync();
+            return ProductDAO.GetProductById(productId);
         }
 
-        public async Task AddProduct(Product product)
+        public void UpdateProduct(Product product)
         {
-            _dbContext.Products.Add(product);
-            await _dbContext.SaveChangesAsync();
+            ProductDAO.UpdateProduct(product);
         }
 
-        public async Task UpdateProduct(Product product)
+        public void DeleteProduct(int productId)
         {
-            _dbContext.Products.Update(product);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteProduct(int id)
-        {
-            var product = await _dbContext.Products.FindAsync(id);
-            if (product != null)
-            {
-                _dbContext.Products.Remove(product);
-                await _dbContext.SaveChangesAsync();
-            }
+            ProductDAO.DeleteProduct(productId);
         }
     }
 }

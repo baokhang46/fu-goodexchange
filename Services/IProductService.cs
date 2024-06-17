@@ -10,10 +10,10 @@ namespace Services
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetAllProductsAsync();
-        Task<Product> GetProductByIdAsync(int id);
-        Task<int> CreateProductAsync(Product product);
-        Task<string> UpdateProductAsync(Product product);
-        Task<string>DeleteProductAsync(int id);
+        List<Product> GetAllProducts();
+        void GetProductById(int id);
+        void CreateProduct(Product product);
+        void UpdateProduct(Product product);
+        void DeleteProduct(int id);
     }
 }

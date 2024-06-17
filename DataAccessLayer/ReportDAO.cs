@@ -1,4 +1,5 @@
-﻿using BussinessObject.Model;
+﻿
+using BussinessObject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace DataAccessLayer
                 var report = context.Reports.SingleOrDefault(r => r.ReportId == reportId);
                 if (report != null)
                 {
-                    report.Status = "Inactive";
+                    report.Status = false; // Set Status to false for deactivation
                     context.SaveChanges();
                 }
             }
@@ -87,7 +88,7 @@ namespace DataAccessLayer
                 var report = context.Reports.SingleOrDefault(r => r.ReportId == reportId);
                 if (report != null)
                 {
-                    report.Status = "Active";
+                    report.Status = true; // Set Status to true for activation
                     context.SaveChanges();
                 }
             }
