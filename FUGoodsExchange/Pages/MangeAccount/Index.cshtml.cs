@@ -20,10 +20,19 @@ namespace FUGoodsExchange.Pages.MangeAccount
         }
 
         public IList<Account> Account { get;set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public string SearchTerm { get; set; } = string.Empty;
+
+        [BindProperty(SupportsGet = true)]
+        public string SortOption { get; set; } = "name-asc";
+
+        [BindProperty(SupportsGet = true)]
+        public string FilterOption { get; set; } = "all";
 
         public async Task OnGetAsync()
         {
             Account = _accountService.GetAllAccounts();
+            var searchAcc = _accountService.SearchAccounts(SearchTerm, SortOption, FilterOption);
         }
     }
 }

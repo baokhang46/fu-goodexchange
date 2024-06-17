@@ -9,7 +9,6 @@ namespace Services
         Account GetAccountById(int accountId);
         void CreateAccount(Account account);
         void UpdateAccount(Account account);
-        void DeactivateAccount(int accountId);
-        void ReactivateAccount(int accountId);
+        public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption);
     }
 }

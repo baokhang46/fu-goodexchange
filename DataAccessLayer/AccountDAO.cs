@@ -60,41 +60,39 @@ namespace DataAccessLayer
             }
         }
 
-        public static void DeactivateSystemAccount(int accountId)
+        public static List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption)
         {
-            try
+            using var db = new FugoodexchangeContext();
+            var accounts = db.Accounts.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
             {
-                using var context = new FugoodexchangeContext();
-                var account = context.Accounts.SingleOrDefault(c => c.AccountId == accountId);
-                if (account != null)
-                {
-                    account.Status = "Inactive";
-                    context.SaveChanges();
-                }
+                accounts = accounts.Where(a => a.Username.Contains(searchTerm));
             }
-            catch (Exception e)
+
+            if (filterOption == "active")
             {
-                throw new Exception(e.Message);
+                accounts = accounts.Where(a => a.Status == "active");
             }
+            else if (filterOption == "inactive")
+            {
+                accounts = accounts.Where(a => a.Status == "inactive");
+            }
+
+            switch (sortOption)
+            {
+                case "name-asc":
+                    accounts = accounts.OrderBy(a => a.Username);
+                    break;
+                case "name-desc":
+                    accounts = accounts.OrderByDescending(a => a.Username);
+                    break;               
+            }
+
+            return accounts.ToList();
         }
 
-        public static void ReactivateSystemAccount(int accountId)
-        {
-            try
-            {
-                using var context = new FugoodexchangeContext();
-                var account = context.Accounts.SingleOrDefault(c => c.AccountId == accountId);
-                if (account != null)
-                {
-                    account.Status = "Active";
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+
 
     }
 }

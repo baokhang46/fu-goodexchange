@@ -9,7 +9,6 @@ namespace Repositories
         Account GetAccountById(int accountId);
         void CreateAccount(Account account);
         void UpdateAccount(Account account);
-        void DeactivateAccount(int accountId);
-        void ReactivateAccount(int accountId);
+        List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption);
     }
 }

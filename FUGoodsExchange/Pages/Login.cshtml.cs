@@ -34,7 +34,7 @@ namespace FUGoodsExchange.Pages
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
-
+            HttpContext.Session.SetString("UserId", account.AccountId.ToString());
             HttpContext.Session.SetString("UserEmail", account.Email);
 
             if (account.Role == "Admin")
