@@ -10,10 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton(typeof(IReportService), typeof(ReportService));
 builder.Services.AddSingleton(typeof(IProductService), typeof(ProductService));
+builder.Services.AddSingleton(typeof(IUserService), typeof(UserService));
 
 
 builder.Services.AddSingleton(typeof(IReportRepository), typeof(ReportRepository));
 builder.Services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
+builder.Services.AddSingleton(typeof(IUserRepository), typeof(UserRepository));
 
 
 builder.Services.AddDbContext<FugoodexchangeContext>(options =>

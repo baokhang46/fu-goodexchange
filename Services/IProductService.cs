@@ -11,7 +11,7 @@ namespace Services
     public interface IProductService
     {
         List<Product> GetAllProducts();
-        void GetProductById(int id);
+        Product GetProductById(int id);
         void CreateProduct(Product product);
         void UpdateProduct(Product product);
         void DeleteProduct(int id);
