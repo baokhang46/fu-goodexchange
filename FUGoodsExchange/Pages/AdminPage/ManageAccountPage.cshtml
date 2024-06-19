@@ -1,0 +1,106 @@
+﻿@page
+@model FUGoodsExchange.Pages.ManageAccount.ManageAccountModel
+
+@{
+    ViewData["Title"] = "Manage Accounts";
+}
+
+<h1>Manage Accounts</h1>
+
+<form method="get">
+    <div class="form-group">
+        <label for="SearchTerm">Search:</label>
+        <input type="text" id="SearchTerm" name="SearchTerm" value="@Model.SearchTerm" class="form-control" />
+    </div>
+    <select class="form-control" id="SortOption" name="SortOption">
+        <option value="name-asc" selected="@((Model.SortOption == "name-asc") ? "selected" : null)">Name Ascending</option>
+        <option value="name-desc" selected="@((Model.SortOption == "name-desc") ? "selected" : null)">Name Descending</option>
+    </select>
+    <div class="form-group">
+        <label for="FilterOption">Filter by:</label>
+        <select class="form-control" id="FilterOption" name="FilterOption">
+            <option value="all" selected="@(Model.FilterOption == "all" ? "selected" : null)">All</option>
+            <option value="active" selected="@(Model.FilterOption == "active" ? "selected" : null)">Active</option>
+            <option value="inactive" selected="@(Model.FilterOption == "inactive" ? "selected" : null)">Inactive</option>
+        </select>
+
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model.Accounts)
+        {
+            <tr>
+                <td>@account.Username</td>
+                <td>@account.Password</td>
+                <td>@account.Email</td>
+                <td>@account.Status</td>
+                <td>@account.Role</td>
+                <td>
+                    @if (account.Role != "Admin")
+                    {
+                        <a asp-page="./ManageAccount" asp-route-id="@account.AccountId">Edit</a> 
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@account.AccountId" onsubmit="return confirm('Are you sure you want to delete this account?');">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <div class="form-group">
+                            <label asp-for="Account.Role" class="control-label"></label>
+                            <select asp-for="Account.Role" class="form-control">
+                                <option value="Moderator">Moderator</option>
+                                <option value="Seller">Seller</option>
+                            </select>
+                            <span asp-validation-for="Account.Role" class="text-danger"></span>
+                        </div>
+                    }
+                    else 
+                    {
+                        <span class="text-muted">Admin cannot edit/delete</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.Account != null && !User.IsInRole("Admin") && Model.Account.Role != "Admin")
+{
+    <h2>Edit Account</h2>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Account.Username" class="control-label"></label>
+            <input asp-for="Account.Username" class="form-control" />
+            <span asp-validation-for="Account.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Account.Password" class="control-label"></label>
+            <input asp-for="Account.Password" class="form-control" />
+            <span asp-validation-for="Account.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Account.Email" class="control-label"></label>
+            <input asp-for="Account.Email" class="form-control" />
+            <span asp-validation-for="Account.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Account.Status" class="control-label"></label>
+            <select asp-for="Account.Status" class="form-control">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            <span asp-validation-for="Account.Status" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+}

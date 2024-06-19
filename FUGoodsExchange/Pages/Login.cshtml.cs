@@ -40,7 +40,7 @@ namespace FUGoodsExchange.Pages
             if (account.Role == "Admin")
             {
                 HttpContext.Session.SetString("UserRole", "Admin");
-                return RedirectToPage("/AdminHomePage/AdminHomePage");
+                return RedirectToPage("/AdminPage/AdminHomePage");
             }
             else if (account.Role == "Moderator")
             {
