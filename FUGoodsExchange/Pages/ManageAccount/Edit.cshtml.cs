@@ -39,7 +39,7 @@ namespace FUGoodsExchange.Pages.MangeAccount
             {
                 return NotFound();
             }
-            if (currAcc == null || currAcc.Role == null)
+            if (currAcc != null || currAcc.Role != null)
             {
                 var account = _accountService.GetAccountById((int)id);
                 if (account == null)
@@ -94,7 +94,7 @@ namespace FUGoodsExchange.Pages.MangeAccount
         {
             if (!EmailIsExisted(Account.Email))
             {
-
+                
                 _accountService.UpdateAccount(Account);
 
             }

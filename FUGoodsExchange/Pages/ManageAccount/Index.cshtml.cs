@@ -31,6 +31,7 @@ namespace FUGoodsExchange.Pages.MangeAccount
 
         public async Task OnGetAsync()
         {
+ 
             Account = _accountService.GetAllAccounts();
             var searchAcc = _accountService.SearchAccounts(SearchTerm, SortOption, FilterOption);
         }

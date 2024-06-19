@@ -23,6 +23,8 @@ namespace Repositories
 
         public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption)
             => AccountDAO.SearchAccounts(searchTerm, sortOption, filterOption);
+
+        public void DeactivateAccount(Account account) => AccountDAO.DeactivateAccount(account);
         
     }
 }
