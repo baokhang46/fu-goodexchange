@@ -92,14 +92,33 @@ namespace FUGoodsExchange.Pages.MangeAccount
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!EmailIsExisted(Account.Email))
+            if (EmailIsExisted(Account.Email))
             {
-                
-                _accountService.UpdateAccount(Account);
-
+                return Page();
             }
-            return RedirectToPage("./Index");
 
+            try
+            {
+                var existingAccount = _accountService.GetAccountById(Account.AccountId);
+                if (existingAccount == null)
+                {
+                    return NotFound();
+                }
+
+                existingAccount.Username = Account.Username;
+                existingAccount.Password = Account.Password;
+                existingAccount.Email = Account.Email;
+                existingAccount.Role = Account.Role;
+
+                _accountService.UpdateAccount(existingAccount);
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Failed to update account";
+                ModelState.AddModelError(string.Empty, ErrorMessage);
+                return Page();
+            }
         }
     }
 }
