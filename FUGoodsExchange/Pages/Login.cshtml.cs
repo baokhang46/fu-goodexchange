@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration;
 using BussinessObject.Model;
 using Services;
 using FUGoodsExchange.Security;
@@ -26,41 +25,31 @@ namespace FUGoodsExchange.Pages
         public Account Account { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
-        {          
-
+        {
             var account = _accountService.GetAccountByEmail(Account.Email);
             if (account == null || !PasswordHasher.VerifyPassword(Account.Password, account.Password))
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                 return Page();
             }
+
             HttpContext.Session.SetString("UserId", account.AccountId.ToString());
             HttpContext.Session.SetString("UserEmail", account.Email);
+            HttpContext.Session.SetString("UserRole", account.Role);
 
-            if (account.Role == "Admin")
+            return RedirectToRoleHomePage(account.Role);
+        }
+
+        private IActionResult RedirectToRoleHomePage(string role)
+        {
+            return role switch
             {
-                HttpContext.Session.SetString("UserRole", "Admin");
-                return RedirectToPage("/AdminPage/AdminHomePage");
-            }
-            else if (account.Role == "Moderator")
-            {
-                HttpContext.Session.SetString("UserRole", "Moderator");
-                return RedirectToPage("/ModeratorHomePage/ModeratorHomePage");
-            }
-            else if (account.Role == "Buyer")
-            {
-                HttpContext.Session.SetString("UserRole", "Buyer");
-                return RedirectToPage("/BuyerHomePage/BuyerHomePage");
-            }
-            else if (account.Role == "Seller")
-            {
-                HttpContext.Session.SetString("UserRole", "Seller");
-                return RedirectToPage("/SellerHomePage/SellerHomePage");
-            }
-            else
-            {              
-                return RedirectToPage("./Index");
-            }
+                "Admin" => RedirectToPage("/AdminPage/AdminHomePage"),
+                "Moderator" => RedirectToPage("/ModeratorHomePage/ModeratorHomePage"),
+                "Buyer" => RedirectToPage("/BuyerHomePage/BuyerHomePage"),
+                "Seller" => RedirectToPage("/SellerHomePage/SellerHomePage"),
+                _ => RedirectToPage("./Index"),
+            };
         }
     }
 }

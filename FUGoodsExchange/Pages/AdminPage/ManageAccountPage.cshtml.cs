@@ -34,8 +34,13 @@ namespace FUGoodsExchange.Pages.ManageAccount
         [BindProperty]
         public string ErrorMessage { get; set; } = string.Empty;
 
-        public async Task OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             Accounts = _accountService.GetAllAccounts();
 
             if (!string.IsNullOrEmpty(SearchTerm) || !string.IsNullOrEmpty(SortOption) || !string.IsNullOrEmpty(FilterOption))
@@ -51,6 +56,8 @@ namespace FUGoodsExchange.Pages.ManageAccount
                     Account = account;
                 }
             }
+
+            return Page();
         }
 
         private bool EmailIsExisted(string email)
@@ -74,8 +81,14 @@ namespace FUGoodsExchange.Pages.ManageAccount
             return false;
         }
 
-        public async Task<IActionResult> OnPostUpdateAsync()
+        public async Task<IActionResult> OnPostUpdateAsync(int? id)
         {
+            var chekAccount = HttpContext.Session.GetString("UserRole"); 
+            if (chekAccount != "Admin")
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             if (EmailIsExisted(Account.Email))
             {
                 return Page();
@@ -83,19 +96,16 @@ namespace FUGoodsExchange.Pages.ManageAccount
 
             try
             {
-                var existingAccount = _accountService.GetAccountById(Account.AccountId);
+                var existingAccount = _accountService.GetAccountById((int)id);
                 if (existingAccount == null)
                 {
                     return NotFound();
                 }
 
-                existingAccount.Username = Account.Username;
-                existingAccount.Password = Account.Password;
-                existingAccount.Email = Account.Email;
                 existingAccount.Role = Account.Role;
 
                 _accountService.UpdateAccount(existingAccount);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./ManageAccountPage");
             }
             catch (Exception ex)
             {
@@ -107,6 +117,11 @@ namespace FUGoodsExchange.Pages.ManageAccount
 
         public async Task<IActionResult> OnPostDeactivateAsync(int? id)
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/AccessDenied");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -123,7 +138,7 @@ namespace FUGoodsExchange.Pages.ManageAccount
                 account.Status = "Inactive";
                 _accountService.DeactivateAccount(account);
 
-                return RedirectToPage("./Index");
+                return RedirectToPage("./ManageAccountPage");
             }
             catch (Exception ex)
             {
