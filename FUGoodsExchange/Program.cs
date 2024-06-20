@@ -1,5 +1,6 @@
 using BussinessObject.Model;
 using FUGoodsExchange.Security;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Services;
@@ -36,6 +37,23 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<PasswordHasher>();
 
+// Add authentication and authorization
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login"; 
+        options.AccessDeniedPath = "/AccessDenied"; 
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("ModeratorOnly", policy => policy.RequireRole("Moderator"));
+    options.AddPolicy("BuyerOnly", policy => policy.RequireRole("Buyer"));
+    options.AddPolicy("SellerOnly", policy => policy.RequireRole("Seller"));
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,7 +69,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); 
+app.UseAuthorization();  
+
 app.UseSession();
 
 app.MapRazorPages();
