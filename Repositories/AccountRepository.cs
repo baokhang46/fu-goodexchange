@@ -25,6 +25,8 @@ namespace Repositories
             => AccountDAO.SearchAccounts(searchTerm, sortOption, filterOption);
 
         public void DeactivateAccount(Account account) => AccountDAO.DeactivateAccount(account);
-        
+
+        public void UpdatePassword(int accountId, string hashedPassword)
+            => AccountDAO.UpdatePassword(accountId, hashedPassword);
     }
 }

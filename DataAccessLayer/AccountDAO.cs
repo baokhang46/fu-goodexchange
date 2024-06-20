@@ -1,6 +1,5 @@
 ﻿using BussinessObject.Model;
 using Microsoft.EntityFrameworkCore;
-
 namespace DataAccessLayer
 {
     public class AccountDAO
@@ -121,7 +120,27 @@ namespace DataAccessLayer
             return accounts.ToList();
         }
 
-
-
+        public static void UpdatePassword(int accountId, string hashedPassword)
+        {
+            try
+            {
+                using var context = new FugoodexchangeContext();
+                var accountToUpdate = context.Accounts.FirstOrDefault(a => a.AccountId == accountId);
+                if (accountToUpdate != null)
+                {
+                    accountToUpdate.Password = hashedPassword;
+                    context.Entry(accountToUpdate).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Account does not exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to update password", ex);
+            }
+        }
     }
 }

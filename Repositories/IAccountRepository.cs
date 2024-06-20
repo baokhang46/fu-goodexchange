@@ -11,5 +11,6 @@ namespace Repositories
         void UpdateAccount(Account account);
         void DeactivateAccount(Account account);
         List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption);
+        void UpdatePassword(int accountId, string hashedPassword);
     }
 }

@@ -54,5 +54,10 @@ namespace Services
         {
              _accountRepository.DeactivateAccount(account);
         }
+
+        public void UpdatePassword(int accountId, string hashedPassword)
+        {
+            _accountRepository.UpdatePassword(accountId, hashedPassword);
+        }
     }
 }

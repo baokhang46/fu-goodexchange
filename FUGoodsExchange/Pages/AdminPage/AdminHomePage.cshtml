@@ -4,14 +4,59 @@
     ViewData["Title"] = "Admin Home Page";
 }
 
-<h1>Welcome, Administrator!</h1>
+<div class="container">
+    <h1 class="mt-4">Welcome, Administrator!</h1>
+    <p>This is the admin home page where you can manage various functionalities:</p>
 
-<p>This is the admin home page where you can manage various functionalities:</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Accounts</h5>
+                    <p class="card-text">Add, edit, and delete user accounts.</p>
+                    <a asp-page="/AdminPage/ManageAccountPage" class="btn btn-primary">Go to Manage Accounts</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Categories</h5>
+                    <p class="card-text">Create, edit, and remove categories.</p>
+                    <a asp-page="./ManageCategories/Index" class="btn btn-primary">Go to Manage Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Edit Personal Information</h5>
+                    <p class="card-text">Update your personal information and settings.</p>
+                    <a asp-page="./EditPersonalInformation" class="btn btn-primary">Go to Edit Information</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">View Posts by Category</h5>
+                    <p class="card-text">Browse posts sorted by category.</p>
+                    <a asp-page="./ViewPostsByCategory" class="btn btn-primary">Go to View Posts</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Search Items by Category</h5>
+                    <p class="card-text">Search for items based on their category.</p>
+                    <a asp-page="./SearchItemsByCategory" class="btn btn-primary">Go to Search Items</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<ul>
-    <li><a asp-page="/AdminPage/ManageAccountPage">Manage Accounts</a></li>
-    <li><a asp-page="./ManageCategories/Index">Manage Categories</a></li>
-    <li><a asp-page="./EditPersonalInformation">Edit Personal Information</a></li>
-    <li><a asp-page="./ViewPostsByCategory">View Posts by Category</a></li>
-    <li><a asp-page="./SearchItemsByCategory">Search Items by Category</a></li>
-</ul>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
