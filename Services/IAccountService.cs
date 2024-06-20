@@ -11,5 +11,6 @@ namespace Services
         void UpdateAccount(Account account);
         public List<Account> SearchAccounts(string searchTerm, string sortOption, string filterOption);
         void DeactivateAccount(Account account);
+        void UpdatePassword(int accountId, string hashedPassword);
     }
 }
