@@ -34,6 +34,7 @@ namespace DataAccessLayer
                 return db.Products
                          .Include(p => p.Category)
                          .Include(p => p.Seller)
+                         .ThenInclude(s => s.User)
                          .ToList();
             }
             catch (Exception e)
