@@ -18,9 +18,9 @@ namespace Services
             return _productRepository.GetAllProduct();
         }
 
-        public void GetProductById(int id)
+        public Product GetProductById(int id)
         {
-            _productRepository.GetProductById(id);
+            return _productRepository.GetProductById(id);
         }
 
         public void CreateProduct(Product product)

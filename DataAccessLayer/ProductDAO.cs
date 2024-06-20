@@ -14,13 +14,17 @@ namespace DataAccessLayer
             try
             {
                 using var db = new FugoodexchangeContext();
-                return db.Products.FirstOrDefault(p => p.ProductId == productId);
+                return db.Products
+                         .Include(p => p.Category)
+                         .Include(p => p.Seller)
+                         .FirstOrDefault(p => p.ProductId == productId);
             }
             catch (Exception e)
             {
                 throw new Exception($"An error occurred while retrieving product with ID {productId}.", e);
             }
         }
+
 
         public static List<Product> GetAllProducts()
         {

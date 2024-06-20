@@ -1,50 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using BussinessObject.Model;
+﻿using BussinessObject.Model;
 using DataAccessLayer;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly FugoodexchangeContext _dbContext;
-
-        public UserRepository(FugoodexchangeContext dbContext)
+        public void AddUser(User user)
         {
-            _dbContext = dbContext;
+            UserDAO.AddUser(user);
         }
 
-        public async Task<User> GetUserById(int id)
+        public IEnumerable<User> GetAllUser()
         {
-            return await _dbContext.Users.FindAsync(id);
+            return UserDAO.GetAllUsers();
         }
 
-        public async Task<IEnumerable<User>> GetAllUser()
+        public User GetUserById(int id)
         {
-            return await _dbContext.Users.ToListAsync();
+            return UserDAO.GetUserById(id);
         }
 
-        public async Task AddUser(User user)
+        public void UpdateUser(User user)
         {
-            _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
+            UserDAO.UpdateUser(user);
         }
 
-        public async Task UpdateUser(User user)
+        public void DeleteUser(int id)
         {
-            _dbContext.Users.Update(user);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeleteUser(int id)
-        {
-            var user = await _dbContext.Users.FindAsync(id);
-            if (user != null)
-            {
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
-            }
+            UserDAO.DeleteUser(id);
         }
     }
 }

@@ -1,104 +1,82 @@
-﻿using System;
+﻿using BussinessObject.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using BussinessObject.Model;
 
 namespace DataAccessLayer
 {
-    public class UserDAO
+    public static class UserDAO
     {
-        private readonly    FugoodexchangeContext _context;
-        private readonly ILogger<UserDAO> _logger;
-
-        public UserDAO(FugoodexchangeContext context, ILogger<UserDAO> logger)
-        {
-            _context = context;
-            _logger = logger;
-        }
-
-        // Create
-        public async Task AddUserAsync(User user)
+        public static User GetUserById(int userId)
         {
             try
             {
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
+                using var db = new FugoodexchangeContext();
+                return db.Users.FirstOrDefault(u => u.UserId == userId);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error adding user");
-                throw;
-            }
-        }
-
-        // Read
-        public async Task<User?> GetUserByIdAsync(int id)
-        {
-            try
-            {
-                return await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error fetching user by ID");
-                throw;
+                throw new Exception($"An error occurred while retrieving user with ID {userId}.", e);
             }
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public static List<User> GetAllUsers()
         {
             try
             {
-                return await _context.Users.ToListAsync();
+                using var db = new FugoodexchangeContext();
+                return db.Users.ToList();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error fetching all users");
-                throw;
+                throw new Exception("An error occurred while retrieving all users.", e);
             }
         }
 
-        // Update
-        public async Task UpdateUserAsync(User user)
+        public static void AddUser(User user)
         {
             try
             {
-                var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
-                if (existingUser != null)
-                {
-                    existingUser.FirstName = user.FirstName;
-                    existingUser.LastName = user.LastName;
-                    existingUser.Address = user.Address;
-                    existingUser.Carts = user.Carts;
-                    await _context.SaveChangesAsync();
-                }
+                using var context = new FugoodexchangeContext();
+                context.Users.Add(user);
+                context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error updating user");
-                throw;
+                throw new Exception("An error occurred while adding the user.", e);
             }
         }
 
-        // Delete
-        public async Task DeleteUserAsync(int id)
+        public static void UpdateUser(User user)
         {
             try
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserId == id);
+                using var context = new FugoodexchangeContext();
+                context.Entry(user).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("An error occurred while updating the user.", e);
+            }
+        }
+
+        public static void DeleteUser(int userId)
+        {
+            try
+            {
+                using var context = new FugoodexchangeContext();
+                var user = context.Users.SingleOrDefault(u => u.UserId == userId);
                 if (user != null)
                 {
-                    _context.Users.Remove(user);
-                    await _context.SaveChangesAsync();
+                    context.Users.Remove(user);
+                    context.SaveChanges();
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogError(ex, "Error deleting user");
-                throw;
+                throw new Exception("An error occurred while deleting the user.", e);
             }
         }
     }
