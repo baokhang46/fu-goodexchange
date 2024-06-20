@@ -1,54 +1,50 @@
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Repositories;
 using BussinessObject.Model;
+using Repositories;
 
 namespace Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepo;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepo)
+        public UserService(IUserRepository userRepository)
         {
-            _userRepo = userRepo ?? throw new ArgumentNullException(nameof(userRepo));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public IEnumerable<User> GetAllUsers()
         {
             try
             {
-                return await _userRepo.GetAllUser();
+                return _userRepository.GetAllUser();
             }
             catch (Exception ex)
             {
                 // Log the exception
-                throw new Exception($"Failed to retrieve user: {ex.Message}", ex);
+                throw new Exception($"Failed to retrieve users: {ex.Message}", ex);
             }
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public User GetUserById(int id)
         {
             try
             {
-                return await _userRepo.GetUserById(id);
+                return _userRepository.GetUserById(id);
             }
             catch (Exception ex)
             {
                 // Log the exception
-                throw new Exception($"Failed to retrieve user: {ex.Message}", ex);
+                throw new Exception($"Failed to retrieve user with id {id}: {ex.Message}", ex);
             }
         }
 
-        public async Task<int> CreateUserAsync(User user)
+        public void CreateUser(User user)
         {
             try
             {
-                await _userRepo.AddUser(user);
-                return user.UserId; 
+                _userRepository.AddUser(user);
             }
             catch (Exception ex)
             {
@@ -57,31 +53,29 @@ namespace Services
             }
         }
 
-        public async Task<string> UpdateUserAsync(User user)
+        public void UpdateUser(User user)
         {
             try
             {
-                await _userRepo.UpdateUser(user);
-                return "User updated successfully";
+                _userRepository.UpdateUser(user);
             }
             catch (Exception ex)
             {
                 // Log the exception
-                throw new Exception($"Failed to update user: {ex.Message}", ex);
+                throw new Exception($"Failed to update user with id {user.UserId}: {ex.Message}", ex);
             }
         }
 
-        public async Task<string> DeleteUserAsync(int id)
+        public void DeleteUser(int id)
         {
             try
             {
-                await _userRepo.DeleteUser(id);
-                return "User deleted successfully";
+                _userRepository.DeleteUser(id);
             }
             catch (Exception ex)
             {
                 // Log the exception
-                throw new Exception($"Failed to delete user: {ex.Message}", ex);
+                throw new Exception($"Failed to delete user with id {id}: {ex.Message}", ex);
             }
         }
     }
