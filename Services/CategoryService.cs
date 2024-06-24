@@ -10,44 +10,35 @@ namespace Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryService(ICategoryRepository categoryRepository)
-        {
-            _categoryRepository = categoryRepository;
-        }
-        public void createCategory(Category category)
-        {
-             _categoryRepository.createCategory(category);
-        }
+		private ICategoryRepository categoryRepository = null;
 
-        public void deleteCategory(Category category)
-        {
-            _categoryRepository.deleteCategory(category);
-        }
+		public CategoryService()
+		{
+			categoryRepository = new CategoryRepository();
+		}
+		public void AddCategory(Category cate)
+		{
+			categoryRepository.AddCategory(cate);
+		}
 
-        public List<Category> GetCategories()
-        {
-           return _categoryRepository.GetCategories();
-        }
+		public void DeleteCategory(int cate)
+		{
+			categoryRepository.DeleteCategory(cate);
+		}
 
-        public Category GetCategoryById(int id)
-        {
-           return _categoryRepository.GetCategoryById(id);
-        }
+		public List<Category> GetCategories()
+		{
+			return categoryRepository.GetCategories();
+		}
 
-        public Category GetCategoryByName(string CategoryName)
-        {
-            return _categoryRepository.GetCategoryByName(CategoryName);
-        }
+		public Category GetCategory(int cate)
+		{
+			return categoryRepository.GetCategory(cate);
+		}
 
-        public void updateCategory(Category category)
-        {
-            _categoryRepository.updateCategory(category);
-        }
-
-        public bool CategoryExist(int id)
-        {
-            return _categoryRepository.CategoryExist(id);
-        }
-    }
+		public void UpdateCategory(Category cate)
+		{
+			categoryRepository.UpdateCategory(cate);
+		}
+	}
 }

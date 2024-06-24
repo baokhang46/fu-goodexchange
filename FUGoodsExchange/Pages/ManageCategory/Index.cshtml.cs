@@ -12,19 +12,29 @@ namespace FUGoodsExchange.Pages.ManageCategory
 {
     public class IndexModel : PageModel
     {
-        private readonly BussinessObject.Model.FugoodexchangeContext _context;
-        private readonly ICategoryService _categoryService;
-        public IndexModel(BussinessObject.Model.FugoodexchangeContext context, ICategoryService categoryService)
-        {
-            _context = context;
-            _categoryService = categoryService;
-        }
+		private readonly ICategoryService _iCateService;
 
-        public IList<Category> Category { get;set; } = default!;
+		public IndexModel(ICategoryService iCateService)
+		{
+			_iCateService = iCateService;
+		}
 
-        public async Task OnGetAsync()
-        {
-            Category = _categoryService.GetCategories();
-        }
-    }
+		public IList<Category> Category { get; set; } = default!;
+
+		public async Task OnGetAsync()
+		{
+			var cate = _iCateService.GetCategories();
+			if (cate != null)
+			{
+				Category = cate;
+			}
+		}
+
+		public async Task<IActionResult> OnPostLogoutAsync()
+		{
+			HttpContext.Session.Clear();
+			return RedirectToPage("/Index");
+		}
+
+	}
 }

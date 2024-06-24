@@ -2,35 +2,44 @@
 @model FUGoodsExchange.Pages.ManageCategory.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
+}
+
+@{
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+	<a asp-page="Create">Create New</a>
+	<form method="post" asp-page-handler="Logout" style="margin: 0;">
+		<button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none; color: #007bff;">Log Out</button>
+	</form>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Category[0].CategoryName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Category) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Category[0].CategoryName)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.Category)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.CategoryName)
+				</td>
+
+				<td>
+					<a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
+					<a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
+					<a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

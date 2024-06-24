@@ -17,6 +17,8 @@ builder.Services.AddSingleton(typeof(IReportRepository), typeof(ReportRepository
 builder.Services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddSingleton(typeof(IUserRepository), typeof(UserRepository));
 
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 
 builder.Services.AddDbContext<FugoodexchangeContext>(options =>
 {
