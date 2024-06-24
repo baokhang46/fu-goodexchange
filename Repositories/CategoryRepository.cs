@@ -10,20 +10,18 @@ namespace Repositories
 {
     public class CategoryRepository: ICategoryRepository
     {
-        public void deleteCategory(Category category) => CategoryDAO.DeleteCategory(category);
+		public void AddCategory(Category cate) => CategoryDAO.Instance.AddCategory(cate);
 
 
-        public List<Category> GetCategories() => CategoryDAO.GetCategories();
-
-        public void createCategory(Category category) => CategoryDAO.CreateCategory(category);
+		public void DeleteCategory(int cate) => CategoryDAO.Instance.DeleteCategory(cate);
 
 
-        public void updateCategory(Category category) => CategoryDAO.UpdateCategory(category);
+		public List<Category> GetCategories() => CategoryDAO.Instance.GetCategories();
 
-        public Category GetCategoryById(int id) => CategoryDAO.GetCategoryById(id);
 
-        public Category GetCategoryByName(string CategoryName) => CategoryDAO.GetCategoryByName(CategoryName);
+		public Category GetCategory(int cate) => CategoryDAO.Instance.GetCategory(cate);
 
-        public bool CategoryExist(int id) => CategoryDAO.CategoryExist(id);
-    }
+
+		public void UpdateCategory(Category cate) => CategoryDAO.Instance.UpdateCategory(cate);
+	}
 }

@@ -12,33 +12,41 @@ namespace FUGoodsExchange.Pages.ManageCategory
 {
     public class CreateModel : PageModel
     {
-        private readonly BussinessObject.Model.FugoodexchangeContext _context;
-        private readonly ICategoryService _categoryService;
-        public CreateModel(BussinessObject.Model.FugoodexchangeContext context, ICategoryService categoryService)
-        {
-            _context = context;
-            _categoryService = categoryService;
-        }
+		private readonly ICategoryService _accountService;
 
-        public IActionResult OnGet()
-        {
-            return Page();
-        }
+		public CreateModel(ICategoryService accountService)
+		{
+			_accountService = accountService;
+		}
 
-        [BindProperty]
-        public Category Category { get; set; } = default!;
+		public IActionResult OnGet()
+		{
+			return Page();
+		}
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+		[BindProperty]
+		public Category Category { get; set; } = default!;
+		public string ErrorMessage { get; set; }
 
-            _categoryService.createCategory(Category);
 
-            return RedirectToPage("./Index");
-        }
-    }
+		// To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid || _accountService.GetCategories() == null || Category == null)
+			{
+				return Page();
+			}
+
+			try
+			{
+				_accountService.AddCategory(Category);
+				return RedirectToPage("./Index");
+			}
+			catch (Exception ex)
+			{
+				ErrorMessage = ex.Message;
+				return Page();
+			}
+		}
+	}
 }

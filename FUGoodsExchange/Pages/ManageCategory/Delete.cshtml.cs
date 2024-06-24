@@ -12,52 +12,50 @@ namespace FUGoodsExchange.Pages.ManageCategory
 {
     public class DeleteModel : PageModel
     {
-        private readonly BussinessObject.Model.FugoodexchangeContext _context;
-        private readonly ICategoryService _categoryService;
-        public DeleteModel(BussinessObject.Model.FugoodexchangeContext context, ICategoryService categoryService)
-        {
-            _context = context;
-            _categoryService = categoryService;
-        }
+		private readonly ICategoryService _accountService = null;
 
-        [BindProperty]
-        public Category Category { get; set; } = default!;
+		public DeleteModel(ICategoryService accountService)
+		{
+			_accountService = accountService;
+		}
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		[BindProperty]
+		public Category Category { get; set; } = default!;
 
-            var category = _categoryService.GetCategoryById(id.Value);
+		public async Task<IActionResult> OnGetAsync(short id)
+		{
+			if (id == null || _accountService.GetCategories() == null)
+			{
+				return NotFound();
+			}
 
-            if (category == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Category = category;
-            }
-            return Page();
-        }
+			var account = _accountService.GetCategory(id);
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+			if (account == null)
+			{
+				return NotFound();
+			}
+			else
+			{
+				Category = account;
+			}
+			return Page();
+		}
 
-            var category = _categoryService.GetCategoryById(id.Value);
-            if (category != null)
-            {
-                Category = category;
-                _categoryService.deleteCategory(category);
-            }
+		public async Task<IActionResult> OnPostAsync(short id)
+		{
+			if (id == null || _accountService.GetCategories() == null)
+			{
+				return NotFound();
+			}
+			var account = _accountService.GetCategory(id);
 
-            return RedirectToPage("./Index");
-        }
-    }
+			if (account != null)
+			{
+				_accountService.DeleteCategory(id);
+			}
+
+			return RedirectToPage("./Index");
+		}
+	}
 }

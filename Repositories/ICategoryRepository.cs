@@ -10,12 +10,13 @@ namespace Repositories
 {
     public interface ICategoryRepository
     {
-        List<Category> GetCategories();
-        Category GetCategoryById(int id);
-        void createCategory(Category category);
-        void updateCategory(Category category);
-        void deleteCategory(Category category);
-        Category GetCategoryByName(string CategoryName);
-        bool CategoryExist(int id);
-    }
+		List<Category> GetCategories();
+		void AddCategory(Category cate);
+
+		Category GetCategory(int cate);
+
+		void DeleteCategory(int cate);
+
+		void UpdateCategory(Category cate);
+	}
 }
