@@ -13,66 +13,54 @@ namespace FUGoodsExchange.Pages.ManageCategory
 {
     public class EditModel : PageModel
     {
-        private readonly BussinessObject.Model.FugoodexchangeContext _context;
-        private readonly ICategoryService _categoryService;
-        public EditModel(BussinessObject.Model.FugoodexchangeContext context, ICategoryService categoryService)
-        {
-            _context = context;
-            _categoryService = categoryService;
-        }
+		private readonly ICategoryService _accountService = null;
 
-        [BindProperty]
-        public Category Category { get; set; } = default!;
+		public EditModel(ICategoryService accountService)
+		{
+			_accountService = accountService;
+		}
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		[BindProperty]
+		public Category Category { get; set; } = default!;
 
-            var category = _categoryService.GetCategoryById(id.Value);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            Category = category;
-            return Page();
-        }
+		public async Task<IActionResult> OnGetAsync(short id)
+		{
+			if (id == null || _accountService.GetCategories() == null)
+			{
+				return NotFound();
+			}
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+			var account = _accountService.GetCategory(id);
+			if (account == null)
+			{
+				return NotFound();
+			}
+			Category = account;
+			return Page();
+		}
 
-            
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see https://aka.ms/RazorPagesCRUD.
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
 
-            try
-            {
-                _categoryService.updateCategory(Category);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(Category.CategoryId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return RedirectToPage("./Index");
-        }
 
-        private bool CategoryExists(int id)
-        {
-            return _categoryService.CategoryExist(id);
-        }
-    }
+			try
+			{
+				_accountService.UpdateCategory(Category);
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				throw;
+
+			}
+
+			return RedirectToPage("./Index");
+		}
+	}
 }
